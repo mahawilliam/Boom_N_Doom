@@ -16,7 +16,7 @@ public class PickUp : MonoBehaviour
     {
         if (!isCarrying && other.gameObject.tag == "Bomb") {
             Debug.Log("Colliding with Bomb");
-            if (Input.GetKeyDown("space")) {
+            if (Input.GetButtonDown("Pickup1")) {
                 other.transform.position = carryLocation.position;
                 other.transform.parent = GameObject.Find("CarryLocation").transform;
                 isCarrying = true;
@@ -27,13 +27,14 @@ public class PickUp : MonoBehaviour
     
     void Update() {
         if (isCarrying) {
-            if (Input.GetKeyDown("z")) {
+            if (Input.GetKeyDown("space")) {
+                isCarrying = false;
                 item = carryLocation.GetChild(0);
                 item.position = dropLocation.position;
                 item.parent = null;
-                isCarrying = false;
                 Debug.Log("Dropping Up Bomb");
             }
         }
+        
     }
 }
