@@ -3,12 +3,15 @@ using System.Collections;
 
 public class DestroyByTime : MonoBehaviour
 {
+
     public float lifetime;
     public ParticleSystem explosion;
+    private bool collideWithPlayer;
    
     void Start ()
     {
         Destroy (gameObject, lifetime);
+        // collideWithPlayer = false;
     }
 
     void OnDestroy() {
@@ -17,7 +20,23 @@ public class DestroyByTime : MonoBehaviour
     }
 
     void Explode() {
-        Instantiate( explosion, transform.position, Quaternion.identity );
+        Instantiate( explosion, transform.position, Quaternion.identity);
+        if(collideWithPlayer) {
+            Debug.Log("aduh meledak");
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D other) {
+        if (other.gameObject.tag == "Player") {
+            collideWithPlayer = true;
+            Debug.Log("hi");
+        }
+    }
+    void OnCollisionExit2D(Collision2D other) {
+        if (other.gameObject.tag == "Player") {
+            collideWithPlayer = false;
+            Debug.Log("bye");
+        }
     }
     /* 
     public Transform camTransform;
